@@ -6,3 +6,10 @@ When recording audio signals, one has to set a sampling frequency (or a frequenc
 	\item Power conservation.
 \end{enumerate}
 
+The formula for sampling is:
+
+\begin{equation}
+x[n]=x(t)|_{t=nT_{S}}=x(nT_{S})
+\end{equation}
+
+However, we have to be careful not to set this sampling frequency too low, or else we run into a problem called aliasing. 
