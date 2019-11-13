@@ -60,6 +60,22 @@ The major concept is that convolution in the time domain is equal to multiplicat
 \item $Y(m) \overset{IDFT}{\longrightarrow} y(n) \Rightarrow H(m) X(m) \overset{IDFT}{\longrightarrow} h(k)\star x(n)$
 \end{enumerate}    
 
-Now that we can easily move between the frequency and time-domains using the FFT or IDFT, let's design our own low-pass filter by determining the desired frequency response and moving back to the time domain through an IDFT to calculate the filter coefficients that will provide the desired frequency response.  Recall, in our hearing test example, our project group was unable to hear any frequency information content above 15kHz.  As such, we will attempt to design a low-pass filter that removes all of the frequency content above this threshold.  Therefore, our \textit{cutoff} frequency is 15kHz (see Figure \ref{fig:lowpass} for a depiction of the cutoff frequency).  The method that we will use is to define the individual frequency-domain samples representing $H(m)$, and then use Python and the inverse FFT function on these samples to give the FIR filter coefficients.  In order to do this, we must define $H(m)$ over the frequency span from 0 to $f_s$, where $f_s$ is the sampling rate.  As we will discuss in the next section, the sampling rate that we will use is $f_s = 44.1$ kHz.         
+Now that we can easily move between the frequency and time-domains using the FFT or IDFT, let's design our own low-pass filter by determining the desired frequency response and moving back to the time domain through an IDFT to calculate the filter coefficients that will provide the desired frequency response.  Recall, in our hearing test example, our project group was unable to hear any frequency information content above 15kHz.  As such, we will attempt to design a low-pass filter that removes all of the frequency content above this threshold.  Therefore, our \textit{cutoff} frequency is 15kHz (see Figure \ref{fig:lowpass} for a depiction of the cutoff frequency).  To design the filter, we define the  \textbf{Frequency Cut-off Values} (End of Pass Band and Beginning of Stop Band), the \textbf{Sample Rate}, and the \textbf{Stop Band Attenuation} (in Decibels), and then use a Filter Design Tool within the GNU Radio application (which is written in Python) to apply the inverse FFT function to get the FIR filter coefficients.  
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[height = 5cm, width =9cm]{filter_tool_15kHz.png} %this is useful too \includegraphics[width = \linewidth]
+	\caption{Designing the 15kHz Filter using the Filter Design Tool within GNU Radio}
+	\label{fig:mainfilt}
+\end{figure}  
+
+We set the Sample Rate $= 44,100$, the End of the Pass Band at  $15,000$ kHz, the Beginning of the Stop Band at $16,000$, and the Stop Band attenuation at $60$ dB.  After hitting the ``Design" button, the Frequency Response is displayed in Figure \ref{fig:mainfilt}.  As expected, the frequency response shows a drop-off at 15kHz where the Pass Band ends and the frequencies are cut.  The tool will use the frequency response created in order to generate the filter coefficients, or taps.  Figure \ref{fig:taps15} shows the filter coefficients that take the shape of a Sinc function.  The filter coefficients are saved and then passed into the GNU Radio Tool that implements the filter created.      
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[height = 5cm, width =9cm]{filter_tool_15kHz_taps.png} %this is useful too \includegraphics[width = \linewidth]
+	\caption{Filter Coefficients for the 15kHz Filter using the Filter Design Tool within GNU Radio}
+	\label{fig:taps15}
+\end{figure}   
   
  
