@@ -1,5 +1,5 @@
 \subsection{Nyquist-Shannon Sampling Theorem}
-When recording audio signals, one has to set a sampling frequency (or a frequency for recording the signal). There are several reasons why we set a sampling frequency:
+When recording audio signals, one has to set a sampling rate (rate for analog signal, frequency for discrete signal). There are several reasons why we set a sampling rate:
 \begin{enumerate}
 	\item Data storage conservation,
 	\item Bandwith conservation,
@@ -14,4 +14,31 @@ x[n]=x(t)|_{t=nT_{S}}=x(nT_{S})
 
 Where \(T_{S}\) is the sampling period and \(f_{S}= \dfrac{1}{T_{S}}\) is the sampling frequency \cite{notes:class}.
 
-However, we have to be careful not to set this sampling frequency too low, or else we run into a problem called aliasing.  Aliasing is often called undersampling, and occurs when a different time function with a lower frequency produces the same set of samples /cite{aliase:wiki}.
+However, we have to be careful not to set this sampling rate too low, or else we run into a problem called aliasing.  Aliasing is often called undersampling, and occurs when a different time function with a lower frequency produces the same set of samples \cite{aliase:wiki}. Say we have a signal with the following function (example provided by Baxley et al \cite{notes:class}:
+
+\begin{equation}
+x[t]=cos(2\pi20t)
+\end{equation}
+
+This is the true function of the signal, but it may be unknown to those wishing to record it.  Say we sample this signal at 14 Hz.  We get the following alias:
+
+\begin{equation}
+x[n]=cos(2\pi\dfrac{20n}{14})
+\end{equation}
+\begin{equation}
+x[n]=cos(2\pi1.42n)
+\end{equation}
+\begin{equation}
+x[n]=cos(2.85\pi)
+\end{equation}
+\begin{equation}
+x[n]=cos(2\pi+0.85\pi)
+\end{equation}
+
+Since a full period is \(2\pi\), we have aliasing.  Our sample rate of 14Hz is too low. So, if our objective is to sample as little as possible, how do we determine the minimum rate necessary?  For perfect reconstruction, we need:
+
+\begin{equation}
+2f_{max}\leq f_{s}.
+\end{equation}
+
+This equation says that the frequency rate should be greater than or equal to twice the maximum frequency in the true signal.
