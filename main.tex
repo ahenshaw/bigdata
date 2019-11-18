@@ -4,109 +4,85 @@
 \usepackage{amsmath}
 \usepackage{float}
 \usepackage{listings} %so you can write computer code in the LaTex document. 
-\begin{document}
-%
-% paper title
-% Titles are generally capitalized except for words such as a, an, and, as,
-% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
-% not capitalized unless they are the first or last word of the title.
-% Linebreaks \\ can be used within to get better formatting as desired.
-% Do not put math or special symbols in the title.
+\begin{document} 
 \title{Reducing Audio Bandwidth with an FFT-based Low-Pass Filter}
 
-%Designing and demonstrating and FFT-based Low Pass Filter to reduce bandwidth of a recorded audio signal for the purposes of AM Radio transmission.
-
-
-% author names and affiliations
-% use a multiple column layout for up to three different
-% affiliations
-\author{\IEEEauthorblockN{Trent Geisler}
-\IEEEauthorblockA{Analytics and Data Science\\
-Kennesaw State University\\
-Kennesaw, Georgia 30144\\
+\author{
+    \IEEEauthorblockN{Trent Geisler}
+    \IEEEauthorblockA{Analytics and Data Science\\
+    Kennesaw State University\\
+    Kennesaw, Georgia 30144\\
+    }
+    \and
+    \IEEEauthorblockN{Andrew Henshaw}
+    \IEEEauthorblockA{Analytics and Data Science\\
+    Kennesaw State University\\
+    Kennesaw, Georgia 30144\\
+    }
+    \and
+    \IEEEauthorblockN{Lauren Staples}
+    \IEEEauthorblockA{Analytics and Data Science\\
+    Kennesaw State University\\
+    Kennesaw, Georgia 30144\\
+    }
 }
-\and
-\IEEEauthorblockN{Andrew Henshaw}
-\IEEEauthorblockA{Analytics and Data Science\\
-Kennesaw State University\\
-Kennesaw, Georgia 30144\\
-}
-\and
-\IEEEauthorblockN{Lauren Staples}
-\IEEEauthorblockA{Analytics and Data Science\\
-Kennesaw State University\\
-Kennesaw, Georgia 30144\\
-}}
 
-% conference papers do not typically use \thanks and this command
-% is locked out in conference mode. If really needed, such as for
-% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
-% after \documentclass
-
-% for over three affiliations, or if they all won't fit within the width
-% of the page, use this alternative format:
-% 
-%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
-%Homer Simpson\IEEEauthorrefmark{2},
-%James Kirk\IEEEauthorrefmark{3}, 
-%Montgomery Scott\IEEEauthorrefmark{3} and
-%Eldon Tyrell\IEEEauthorrefmark{4}}
-%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
-%Georgia Institute of Technology,
-%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
-%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
-%Email: homer@thesimpsons.com}
-%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
-%Telephone: (800) 555--1212, Fax: (888) 555--1212}
-%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
-
-
-
-
-% use for special paper notices
-%\IEEEspecialpapernotice{(Invited Paper)}
-
-
-
-
-% make the title area
 \maketitle
 
-% As a general rule, do not put math, special symbols or citations
-% in the abstract
 \begin{abstract}
 The abstract goes here.
 \end{abstract}
 
-% no keywords
-
-
-
-
-% For peer review papers, you can put extra information on the cover
-% page as needed:
-% \ifCLASSOPTIONpeerreview
-% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
-% \fi
-%
-% For peerreview papers, this IEEEtran command inserts a page break and
-% creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
+\section{Introduction} 
 
+Filtering an audio signal is extremely important for many
+reasons. When an appropriate filter is designed and used to
+remove any unwanted frequencies, then the bandwidth and power
+necessary for audio signal transmission is reduced. Why is this
+important? The frequency bands used for the transmission of many
+types of signals are scarce resources. Every transmitter that can
+interfere with others has to operate in a licensed band and is
+subject to bandwidth limitations. This is why multiple radio
+stations can operate in the same geographical area. They are
+assigned different center frequencies and they have a certain
+bandwidth they can occupy. If one radio station transmits beyond
+their assigned bandwidth, they will impact the signal
+transmission of other local radio stations. One way to ensure
+that a radio station stays within their assigned bandwidth is
+through the use of filtering.\cite{notes:class}  
 
-\section{Introduction}
-Filtering an audio signal is extremely important for many reasons.  When an appropriate filter is designed and used to remove any unwanted frequencies, then the bandwidth and power necessary for audio signal transmission is reduced.  Why is this important?  The frequency bands used for the transmission of many types of signals are scarce resources.  Every transmitter that can interfere with others has to operate in a licensed band and is subject to bandwidth limitations.  This is why multiple radio stations can operate in the same geographical area.  They are assigned different center frequencies and they have a certain bandwidth they can occupy.  If one radio station transmits beyond their assigned bandwidth, they will impact the signal transmission of other local radio stations.  One way to ensure that a radio station stays within their assigned bandwidth is through the use of filtering.\cite{notes:class}    
+Additionally, if you travel to a different city, you will find
+radio stations that operate at the same frequency as the radio
+stations located locally here in Atlanta. This is possible
+because radio transmitters are limited in power. With unlimited
+power, for example, one could hear FM 106.7 throughout the United
+States and no other radio station would be able to use the
+frequency 106.7 MHz. But power is limited, and high-power radio
+transmissions cost a lot of money \cite{notes:class}. This is why
+some radio stations like to brag about how powerful their
+transmissions are. It is also why start-up radio stations have a
+very limited range. Therefore, if power costs money, one does not
+want to waste it by broadcasting frequencies that most humans
+cannot hear.
 
-Additionally, if you travel to a different city, you will find radio stations that operate at the same frequency as the radio stations located locally here in Atlanta.  This is possible because radio transmitters are limited in power.  With unlimited power, for example, one could hear FM 106.7 throughout the United States and no other radio station would be able to use the frequency 106.7 MHz.  But power is limited, and high-power radio transmissions cost a lot of money \cite{notes:class}.  This is why some radio stations like to brag about how powerful their transmissions are.  It is also why start-up radio stations have a very limited range.  Therefore, if power costs money, one does not want to waste it by boadcasting frequencies that most humans cannot hear. 
-
-Both bandwidth and power savings are the motivation behind Fast Fourier Transform (FFT)-based low-pass filters.  This paper will demonstrate how a Finite Impulse Response (FIR) low pass filter can remove unecessary frequencies in order to reduce the bandwidth and power required for transmission.  
+Both bandwidth and power savings are the motivation behind Fast
+Fourier Transform (FFT)-based low-pass filters. This paper will
+demonstrate how a Finite Impulse Response (FIR) low pass filter
+can remove unnecessary frequencies in order to reduce the
+bandwidth and power required for transmission.  
 
 \subsection{Objective}
-Our objective is to design and demonstrate an FFT-based FIR low-pass filter to reduce bandwidth of a recorded audio signal for the purposes of AM Radio transmission.
+
+Our objective is to design and demonstrate an FFT-based FIR
+low-pass filter to reduce bandwidth of a recorded audio signal
+for the purposes of AM Radio transmission.
 
 \section{Methods}
-We collected data, designed a low pass filter, pushed the signal through the filter, and then evaluated the resulting signal.
+
+We collected data, designed a low pass filter, pushed the signal
+through the filter, and then evaluated the resulting signal.
 
 \input{data.tex}
 \input{filter_design.tex}
@@ -114,28 +90,6 @@ We collected data, designed a low pass filter, pushed the signal through the fil
 \input{evaluation.tex}
 \input{conclusion.tex}
 
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
-
-% references section
-
-% can use a bibliography generated by BibTeX as a .bbl file
-% BibTeX documentation can be easily obtained at:
-% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
-% The IEEEtran BibTeX style support page is at:
-% http://www.michaelshell.org/tex/ieeetran/bibtex/
-%\bibliographystyle{IEEEtran}
-% argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,../bib/paper}
-%
-% <OR> manually copy in the resultant .bbl file
-% set second argument of \begin to the number of references
-% (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
 
 \bibitem{GNU:radio}
@@ -176,78 +130,7 @@ Baxley, R., Henshaw, A., Nowlan, S., \& Trewhitt, E. \emph{Juyter Notebook for S
 
 \subsection{Python Code for Filter Design\cite{notes:class}}
 
-\begin{lstlisting}[language = Python]
-
-num_samples = 100
-
-# set seed value (optional)
-np.random.seed(10)
-
-# generate numpy array of random numbers
-#this are the x(n) values 
-x = np.random.rand(num_samples)-0.5
-
-# filter order
-L = 4
-h = np.ones(L)/L
-
-plt.figure(11)
-plt.stem(h)
-plt.xlim([-1,4])
-plt.title('Impulse Response - Coefficients of Simple Averager Filter')
-N_fft = 1024 #use a power of two
-
-# frequency response
-# the second argument of fft is the number of fft bins to use.
-freq_response = np.fft.fft(h,N_fft)
-
-# Transform using DFT to get the frequency response
-freq = np.fft.fftfreq(freq_response.size)
-
-
-# plot filter frequency response
-plt.figure(1)
-plt.plot(freq, abs(freq_response), 'b.');
-plt.ylabel('Amplitude', color='b');
-plt.xlabel('Frequency');
-plt.grid(True);
-plt.title('Frequency Response of Simple Averager Filter');
-
-
-# plot input frequency spectrum by
-# using the FFT to convert time to frequency
-x_spectrum = np.fft.fft(x,N_fft)
-
-plt.figure(2)
-plt.plot(freq, abs(x_spectrum), 'b.', label='Input');
-plt.ylabel('Amplitude', color='b');
-plt.xlabel('Frequency');
-plt.grid(True);
-plt.title('Input Signal Frequency Spectrum');
-
-# Plot output spectrum
-y = np.convolve(h,x)
-
-#the following two lines provide the same thing
-#1) output spectrum by convolution in the time domain and 
-#using FFT to convert to frequency domain
-
-y_spectrum_convolve = np.fft.fft(y,N_fft)
-
-#2) output spectrum by multiplying in the frequency domain
-
-y_spectrum_multiply = abs(x_spectrum)*freq_response
-
-#plt.plot(freq, abs(y_spectrum), 'r.', label='Output');
-plt.plot(freq, abs(y_spectrum_convolve), 'r', label = 'Output')
-plt.ylabel('Amplitude');
-plt.xlabel('Frequency');
-plt.grid(True);
-plt.title('Signal Spectrum After Filtering (Red)');
-plt.legend();
-\end{lstlisting}
-
-
+\lstinputlisting[language = Python]{filter.py}
 
 % that's all folks
 \end{document}
