@@ -99,24 +99,20 @@ green curve.
  \end{figure}
 
 So, if our objective is to sample as little as possible, how do
-we determine the minimum rate necessary? For perfect
-reconstruction (of the original signal from the sample), we need:
-
-If a function $x ( t )$ contains no
-frequencies higher than $B$ hertz, it is completely determined by
+we determine the minimum rate necessary? The Nyquist-Shannon theorem states that if a function $x ( t )$ contains no
+frequencies higher than $B$ hertz, then it is completely determined by
 giving its ordinates at a series of points spaced $1 / ( 2 B )$
-seconds apart.
-% https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem
+seconds apart \cite{shannon:wiki}. It then follows that a sufficient sampling rate (nyquist rate) is therefore twice the maximum frequency $B$ hertz, $2B$ \cite{shannon:wiki}.
+Restated from a different angle: for a given sample rate $f_{s}$, perfect reconstruction of a signal is guaranteed for a bandlimit $B<f_{s}/2$ \cite{shannon:wiki}.
 
 
-\begin{equation}
-2f_{max}\leq f_{s}.
-\label{eqn:nyq}
-\end{equation}
-% https://en.wikipedia.org/wiki/44,100_Hz
 In our case, before processing with a filter, our raw signal had
 a sampling rate of 44.1 kHz. This is the standard for CD-quality
-audio. We know from Equation \ref{eqn:nyq} that the maximum
+audio. Since human hearing range is roughly 20 Hz to 20,000 Hz, the sampling rate has to at least be 40 kHz (from the Nyquist-Shannon theorem). Audio signals still have to be passed through a low-pass anti-aliasing filter, because even though humans cannot hear frequencies beyond that, these signals can still cause aliasing. A transition band of 100 Hz added to the 40 kHz allows greater ease of anti-aliasing filtering \cite{cd:wiki}. This results in the standard frequency of 44.1 kHz for CDs.
+
+
+
+We know from Equation \ref{eqn:nyq} that the maximum
 frequency that can be represented at any given sampling rate is
 half the sampling rate; thus a 44.1 kHz CD can capture tones up
 to 22.05 kHz. This is often over-kill, since as previously
