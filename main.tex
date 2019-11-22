@@ -2,7 +2,7 @@
 \usepackage{graphicx} % support the \includegraphics command and options
 \usepackage{hyperref}
 \usepackage{amsmath}
-\usepackage{float}
+\usepackage{float} 
 \usepackage{listings} %so you can write computer code in the LaTex document. 
 \begin{document} 
 \title{Reducing Audio Bandwidth with an FFT-based Low-Pass Filter}
@@ -30,7 +30,16 @@
 \maketitle
 
 \begin{abstract}
-The abstract goes here.
+
+    This project demonstrates the application of the Fast Fourier
+    Transform (FFT) as a method for low-pass filtering of audio
+    signals. We discuss the need for low-pass filtering to
+    prevent undersampling and to reduce bandwidth requirements.
+    We explain filter-design techniques and introduce GNU Radio
+    as a platform for audio and radio-frequency exploration.  We
+    explain and demonstrate how an appropriately-chosen low-pass filter
+    can reduce bandwidth without noticeably degrading audio signal quality.
+
 \end{abstract}
 
 \IEEEpeerreviewmaketitle
@@ -136,7 +145,7 @@ Baxley, R., Henshaw, A., Nowlan, S., \& Trewhitt, E. \emph{Juyter Notebook for S
 
 \subsection{Python Code for Filter Design\cite{notes:class}}
 
-\lstinputlisting[language = Python]{filter.py}
+\lstinputlisting[language = Python]{code/filter.py}
 
 % that's all folks
 \end{document}
