@@ -46,41 +46,32 @@
 
 \section{Introduction} 
 
-Filtering an audio signal is extremely important for many
-reasons. When an appropriate filter is designed and used to
-remove any unwanted frequencies, then the bandwidth and power
-necessary for audio signal transmission is reduced. Why is this
-important? The frequency bands used for the transmission of many
-types of signals are scarce resources. Every transmitter that can
-interfere with others has to operate in a licensed band and is
-subject to bandwidth limitations. This is why multiple radio
-stations can operate in the same geographical area. They are
-assigned different center frequencies and they have a certain
-bandwidth they can occupy. If one radio station transmits beyond
-their assigned bandwidth, they will impact the signal
-transmission of other local radio stations. One way to ensure
-that a radio station stays within their assigned bandwidth is
-through the use of filtering.\cite{notes:class}  
-
-Additionally, if you travel to a different city, you will find
-radio stations that operate at the same frequency as the radio
-stations located locally here in Atlanta. This is possible
-because radio transmitters are limited in power. With unlimited
-power, for example, one could hear FM 106.7 throughout the United
-States and no other radio station would be able to use the
-frequency 106.7 MHz. But power is limited, and high-power radio
-transmissions cost a lot of money \cite{notes:class}. This is why
-some radio stations like to brag about how powerful their
-transmissions are. It is also why start-up radio stations have a
-very limited range. Therefore, if power costs money, one does not
-want to waste it by broadcasting frequencies that most humans
-cannot hear.
+When an appropriate filter is designed and used to remove
+unwanted frequency components, then the bandwidth and power
+necessary for audio signal transmission may be reduced. In a
+radio operations, the frequency bands are scarce resources and
+are governed by national and international agencies. Every
+transmitter that can interfere with others has to operate in a
+licensed band and is subject to bandwidth limitations, which is
+why multiple radio stations can operate in the same geographical
+area. If a radio station transmits beyond its assigned bandwidth,
+it will impact the signal transmission of other local radio
+stations. To keep transmitters from interfering with other
+transmitters in different geographic areas, power limits are
+imposed. By reducing the bandwidth of their signals, a
+broadcaster can maximize the impact of its power allocation.
+Radio broadcasters control and limit the bandwidth of their
+emissions by the use of appropriately designed  
+filters.\cite{notes:class}
 
 Both bandwidth and power savings are the motivation behind Fast
 Fourier Transform (FFT)-based low-pass filters. This paper will
-demonstrate how a Finite Impulse Response (FIR) low pass filter
-can remove unnecessary frequencies in order to reduce the
-bandwidth and power required for transmission.  
+demonstrate that a Finite Impulse Response (FIR), lowpass filter
+implemented with an FFT can remove unwanted frequency components in
+order to reduce the bandwidth and power required for  
+transmission.  We will also demonstrate that this bandwidth reduction
+can be applied to audio signals without noticeably degrading the 
+perceived quality of the sound.
 
 \subsection{Objective}
 
