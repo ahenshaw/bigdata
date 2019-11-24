@@ -19,7 +19,7 @@ The formula for sampling is:
 
 Where \(T_{S}\) is the sampling period and \(f_{S}=
 \dfrac{1}{T_{S}}\) is the sampling frequency 
-\cite{notes:class}.
+\cite{notes:class}. Lastly, $n$ is an index of the samples.
 
 However, we have to be careful not to set this sampling rate too
 low, or else we run into a problem called aliasing. Low-frequency
@@ -49,7 +49,7 @@ produce the aliasing, as can be seen below.
 \end{equation}
 
 Because the signal is periodic, adding or subtracting $2\pi n$ 
-inside of the cos functions does not change the equation.
+inside of the cos function does not change the equation.
 
 \begin{equation}
 	x[n]=\cos(\frac{10\pi \cdot n}{9} - 2\pi n)
@@ -102,13 +102,13 @@ So, if our objective is to sample as little as possible, how do
 we determine the minimum rate necessary? The Nyquist-Shannon theorem states that if a function $x ( t )$ contains no
 frequencies higher than $B$ hertz, then it is completely determined by
 giving its ordinates at a series of points spaced $1 / ( 2 B )$
-seconds apart \cite{shannon:wiki}. It then follows that a sufficient sampling rate (nyquist rate) is therefore twice the maximum frequency $B$ hertz, $2B$ \cite{shannon:wiki}.
+seconds apart \cite{shannon:wiki}. It then follows that a sufficient sampling rate (nyquist rate) is therefore twice the maximum frequency $B$ Hz, $2B$ \cite{shannon:wiki}.
 Restated from a different angle: for a given sample rate $f_{s}$, perfect reconstruction of a signal is guaranteed for a bandlimit $B<f_{s}/2$ \cite{shannon:wiki}.
 
 
 In our case, before processing with a filter, our raw signal had
 a sampling rate of 44.1 kHz. This is the standard for CD-quality
-audio. Since human hearing range is roughly 20 Hz to 20,000 Hz, the sampling rate has to at least be 40 kHz (from the Nyquist-Shannon theorem). Audio signals still have to be passed through a low-pass anti-aliasing filter, because even though humans cannot hear frequencies beyond that, these signals can still cause aliasing. A transition band of 100 Hz added to the 40 kHz allows greater ease of anti-aliasing filtering \cite{cd:wiki}. This results in the standard frequency of 44.1 kHz for CDs.
+audio. Since human hearing range is roughly 20 Hz to 20,000 Hz, the sampling rate has to at least be 40 kHz (from the Nyquist-Shannon theorem). Audio signals still have to be passed through a low-pass anti-aliasing filter, because even though humans cannot hear frequencies beyond that, these signals can still cause aliasing. A transition band of 4,100 Hz is added to the 40 kHz allows greater ease of anti-aliasing filtering \cite{cd:wiki}. Figure \ref{fig:lowpass} shows this transition band.  The larger this band, the less 'sharp' of a filter is required. This results in the standard frequency of 44.1 kHz for CDs.
 
 
 

@@ -15,18 +15,18 @@ audible frequency was 15kHz. Since our project group was not able
 to hear the frequencies above the 15kHz threshold, any low-pass
 filter that removed the high frequencies above 15kHz would have
 no impact on the quality of the audio signal that we would hear.
-Recall, removing the unecessary frequencies from an audio signal
+Recall that removing the unecessary frequencies from an audio signal
 transmission provides a few nice benefits such as the following:
 
 \begin{enumerate}
-\item It reduces the necessary power for transmission of the audio signal
-\item It reduces the necessary bandwidth for transmission
+\item It reduces the necessary power for transmission of the audio signal,
+\item It reduces the necessary bandwidth for transmission.
 \end{enumerate}
 
 Filtering is the processing of a time-domain signal resulting in
 some change in that signals original spectral content. The change
 is usually the reduction or filtering of unwanted input spectral
-components.\cite{lyons:intro}. Given the human threshold for
+components\cite{lyons:intro}. Given the human threshold for
 hearing, an obvious opportunity is to apply low-pass filtering in
 order to transmit audio signals that humans can actually hear
 with smaller bandwidths. The ideal low-pass filter would
@@ -58,14 +58,14 @@ as steep as possible to limit the passing of unwanted high audio
 frequencies. The question still remains, how do you build a
 filter that eliminates these frequencies? What is an impulse
 response? How do we translate an impulse response to a frequency
-response and vice versa. Let's address those questions next.
+response and vice versa. We address those questions next.
 
 \subsubsection{Impulse Input, Impulse Response, and FFT}
 
  In our filtering example, we will be dealing with a linear
  time-invariant (LTI) System. A linear system is a class of
  systems where the system's outputs are the sum of the outputs of
- it's parts. Additionally, time-invariant refers to a system
+ its parts. Additionally, time-invariant refers to a system
  where a time delay in the input sequence causes an equivalent
  delay in the output sequence. Now, if we are given a LTI system,
  we can calculate everything about the system if we know the
