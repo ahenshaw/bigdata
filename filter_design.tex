@@ -239,7 +239,7 @@ the important relationships as follows: \\
 \item $Y(m) \overset{I-FFT}{\longrightarrow} y(n) \Rightarrow H(m) X(m) \overset{I-FFT}{\longrightarrow} h(k)\star x(n)$\\
 \end{enumerate}    
 
-Using these important relationships, a typical low-pass filter is designed by determining the desired frequency response of the filter, then using the relationship identified in (4) above to transform the filter information into the time domain so that it can be used in other applications.  Since the process of calculating the desired frequency response is complicated, we will use a tool to provide the desired frequency response based on a set of input values.  The following section will explain how we design an FIR filter
+Using these important relationships, a typical low-pass filter is designed by determining the desired frequency response of the filter, then using the relationship identified in (4) above to transform the filter information into the time domain so that it can be used in other applications.  Since the process of calculating the desired frequency response is complicated, we will use a tool to provide the desired frequency response based on a set of input values.  The process to estimate the frequency response is beyond the scope of this course but is presented nicely in this article: \url{https://en.m.wikipedia.org/wiki/Parks\%E2\%80\%93McClellan_filter_design_algorithm}\cite{filter:response}.   The following section will explain how we design an FIR filter
 using the GNU Radio Filter Design tool with the window method in
 order to create a low-pass filter that removes high frequency
 information content. 
