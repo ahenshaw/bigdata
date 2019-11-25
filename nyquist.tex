@@ -17,9 +17,9 @@ The formula for sampling is:
 	\label{eqn:signal}
 \end{equation}
 
-Where \(T_{S}\) is the sampling period and \(f_{S}=
+Where $x$ is the signal or impulse input, $t$ is the time, \(T_{S}\) is the sampling period and \(f_{S}=
 \dfrac{1}{T_{S}}\) is the sampling frequency 
-\cite{notes:class}. Lastly, $n$ is an index of the samples.
+\cite{notes:class}, and $n$ is an index of the samples.
 
 However, we have to be careful not to set this sampling rate too
 low, or else we run into a problem called aliasing. Low-frequency
@@ -32,7 +32,7 @@ the function:
 	x[t]=cos(2\pi10t)
 \end{equation}
 
-can be visualized (in the time domain) as:
+can be visualized in the time domain as:
 
 \begin{figure}[H]
 	\centering
@@ -103,7 +103,12 @@ we determine the minimum rate necessary? The Nyquist-Shannon theorem states that
 frequencies higher than $B$ hertz, then it is completely determined by
 giving its ordinates at a series of points spaced $1 / ( 2 B )$
 seconds apart \cite{shannon:wiki}. It then follows that a sufficient sampling rate (nyquist rate) is therefore twice the maximum frequency $B$ Hz, $2B$ \cite{shannon:wiki}.
-Restated from a different angle: for a given sample rate $f_{s}$, perfect reconstruction of a signal is guaranteed for a bandlimit $B<f_{s}/2$ \cite{shannon:wiki}.
+Restated from a different angle: for a given sample rate $f_{s}$, perfect reconstruction of a signal is guaranteed for a bandlimit 
+\begin{equation}
+B<f_{s}/2
+\label{eqn:nyq}
+\end{equation}
+ \cite{shannon:wiki}.
 
 
 In our case, before processing with a filter, our raw signal had

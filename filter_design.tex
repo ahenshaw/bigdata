@@ -14,8 +14,8 @@ When our project group performed the hearing test, the highest
 audible frequency was 15kHz. Since our project group was not able
 to hear the frequencies above the 15kHz threshold, any low-pass
 filter that removed the high frequencies above 15kHz would have
-no impact on the quality of the audio signal that we would hear.
-Recall that removing the unecessary frequencies from an audio signal
+no discernable impact on the quality of the audio signal that we would hear.
+Recall, removing the unecessary frequencies from an audio signal
 transmission provides a few nice benefits such as the following:
 
 \begin{enumerate}
@@ -24,11 +24,10 @@ transmission provides a few nice benefits such as the following:
 \end{enumerate}
 
 Filtering is the processing of a time-domain signal resulting in
-some change in that signals original spectral content. The change
+some change in that signal's original spectral content. The change
 is usually the reduction or filtering of unwanted input spectral
 components\cite{lyons:intro}. Given the human threshold for
-hearing, an obvious opportunity is to apply low-pass filtering in
-order to transmit audio signals that humans can actually hear
+hearing, an obvious opportunity is to apply low-pass filtering to only transmit audio signals that humans can actually hear
 with smaller bandwidths. The ideal low-pass filter would
 completely eliminate all frequencies above a certain cutoff point
 (in our hearing test example, the cutoff would be at 15kHz) while
@@ -42,7 +41,7 @@ passing all frequencies below the cutoff point
 	\label{fig:lowpass}
 \end{figure}    
 
-In order to filter out higher frequencies in an audio signal
+To filter out higher frequencies in an audio signal
 transmission, we will build a low-pass filter. Specifically, we
 will build a low-pass filter using a finite number of non-zero
 filter coefficients which is called a \textit{Finite Impulse
@@ -58,12 +57,12 @@ as steep as possible to limit the passing of unwanted high audio
 frequencies. The question still remains, how do you build a
 filter that eliminates these frequencies? What is an impulse
 response? How do we translate an impulse response to a frequency
-response and vice versa. We address those questions next.
+response and vice versa. We address these questions next.
 
 \subsubsection{Impulse Input, Impulse Response, and FFT}
 
  In our filtering example, we will be dealing with a linear
- time-invariant (LTI) System. A linear system is a class of
+ time-invariant (LTI) system. A linear system is a class of
  systems where the system's outputs are the sum of the outputs of
  its parts. Additionally, time-invariant refers to a system
  where a time delay in the input sequence causes an equivalent
@@ -109,23 +108,23 @@ Since there are four separate input sample values to calculate an
 output value, the structure of this filter can be referred to as
 a \textit{4-tap tapped-delay line FIR filter} using digital
 filter vernacular. The coefficients of this filter are all
-$\frac{1}{4}$ and we can use an FFTon the filter to provide all
+$\frac{1}{4}$ and we can use an FFT on the filter to provide all
 the frequency domain information.
 
 For example, we can create a simple input impulse in Python by
 generating random values between $-0.5$ and $0.5$ and then using
 the numpy package in Python to apply the FFT in order to get the
-frequency response, labeled x\_spectrum in Listing
+frequency response, labeled X\_m in Listing
 \ref{lst:codedirect}, of the impulse input. We can then take get
 the frequency response of the filter coefficients (labeled h\_n
 in Listing \ref{lst:codedirect}) by performing another FFT. The
-frequency response of the filter coefficients is labled as
-freq\_response in Listing \ref{lst:codedirect}. Finally, we can
-generate the new output spectrum by multiplying the x\_spectrum
-and the freq\_response since they are both in the frequency
+frequency response of the filter coefficients is labeled as
+H\_m in Listing \ref{lst:codedirect}. Finally, we can
+generate the new output spectrum, Y\_m, by multiplying X\_m
+and H\_m since they are both in the frequency
 domain. See the entire code snipit below in Listing
-\ref{lst:codedirect}. All of the code for this example to include
-the code for the plots is listed in the Appendix.  
+\ref{lst:codedirect}. All of the code for this example, to include
+the code for the plots, is listed in Listing \ref{lst:filter} in the Appendix.  
 
 \lstset{language=Python}
 \lstset{frame=lines}
@@ -156,9 +155,9 @@ Y_m = H_m * abs(X_m)
 Figure \ref{fig:exspec} shows the impact of the simple averager
 filter on the original X\_m (input impulse after transformation
 into the frequency domain). The original X\_m is ploted in blue
-in the bottom graph in Figure \ref{fig:expec} and has a lot of
+in the bottom graph in Figure \ref{fig:exspec} and has a lot of
 frequency information across the entire domain. Once the simple
-average filter is applied, the output spectrum, Y\_m in red has
+average filter is applied, the output spectrum, Y\_m in red, has
 greatly reduced frequency content as the frequency gets further
 away from 0. Additionally, you should notice that the output
 spectrum (red line) is created by simply multiplying the
@@ -211,25 +210,25 @@ operation of a convolution. More specifically for an
 $$y(n) = \sum_{k=0}^{M-1}  h(k)x(n-k)$$
 
 Where $h(k)$ are the filter coefficients for each of the taps.
-\textbf{The terms FIR filter coefficients and impulse response
+\textbf{The terms \textit{FIR filter coefficients} and \textit{impulse response}
 mean the same thing}\cite{lyons:intro}. We can re-write the above
 equation using \textit{convolution} notation as follows:
 
 $$y(n) = h(k) \star x(n)$$  
 
 The major concept is that convolution in the time domain is equal
-to multiplication in the frequency. The process in which we can
-move from one domain by using an FFT. The FFT of $y(n)$ is equal
+to multiplication in the frequency domain. The process in which we can
+move from one domain to the other is by using an FFT. The FFT of $y(n)$ is equal
 to $Y(m) = H(m) X(m)$, which is the spectrum of the filter
 output. In our simple averager example above, we used
-multiplication to create the blue line, $Y(m)$, in the bottom
+multiplication to create the red line, $Y(m)$, in the bottom
 graph of Figure \ref{fig:exspec}. In a similar way, we can
 determine $y(n) = h(k)\star x(n)$ by taking the inverse FFT
 (denoted as I-FFT) of $Y(m)$ \cite{lyons:intro} The FFT and the
 inverse FFT allow us to move from the time domain to the
 frequency domain, and from the frequency domain back to the the
 time domain. To keep track of all the transformations, we listed
-the important relationships are as follows: \\
+the important relationships as follows: \\
 
 \begin{enumerate}
 \item $x(n) \overset{FFT}{\longrightarrow} X(m)$
@@ -240,11 +239,10 @@ the important relationships are as follows: \\
 \item $Y(m) \overset{I-FFT}{\longrightarrow} y(n) \Rightarrow H(m) X(m) \overset{I-FFT}{\longrightarrow} h(k)\star x(n)$\\
 \end{enumerate}    
 
-The following section will explain how we design an FIR filter
+Using these important relationships, a typical low-pass filter is designed by determining the desired frequency response of the filter, then using the relationship identified in (4) above to transform the filter information into the time domain so that it can be used in other applications.  Since the process of calculating the desired frequency response is complicated, we will use a tool to provide the desired frequency response based on a set of input values.  The following section will explain how we design an FIR filter
 using the GNU Radio Filter Design tool with the window method in
 order to create a low-pass filter that removes high frequency
-information content. The process ``behind the scenes" is similar
-to the example with the simple averager.  
+information content. 
 
 \subsubsection{GNU Radio: Filter Design Tool}
 
@@ -263,8 +261,8 @@ frequency). To design the filter, we define the \textbf{frequency
 cut-off values} (end of passband and beginning of stopband), the
 \textbf{sample rate}, and the \textbf{stopband attenuation} (in
 decibels), and then use a Filter Design Tool within the GNU Radio
-application (which is written in Python) to apply the inverse FFT
-function to get the FIR filter coefficients.  
+application (which is written in Python) to calculate the frequency response and then apply the inverse FFT
+function to calculate the FIR filter coefficients.  
 
 \begin{figure}[h!]
 	\centering
@@ -273,7 +271,7 @@ function to get the FIR filter coefficients.
 	\label{fig:mainfilt}
 \end{figure}  
 
-We set the sample rate $= 44,100$, the end of the passband at
+We set the sample rate $= 44.1$ kHz, the end of the passband at
 $15$ kHz, the beginning of the stopband at $16$ kHz, and the
 stopband attenuation at $60$ dB. After hitting the ``Design"
 button, the tool creates the frequency response for the desired

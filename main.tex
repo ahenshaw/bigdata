@@ -4,7 +4,9 @@
 \usepackage{amsmath}
 \usepackage{float} 
 \usepackage{listings} %so you can write computer code in the LaTex document. 
+
 \begin{document} 
+
 \title{Reducing Audio Bandwidth with an FFT-based Low-Pass Filter}
 
 \author{
@@ -66,7 +68,7 @@ filters\cite{notes:class}.
 
 Both bandwidth and power savings are the motivation behind Fast
 Fourier Transform (FFT)-based low-pass filters. This paper will
-demonstrate that a Finite Impulse Response (FIR), lowpass filter
+demonstrate that a Finite Impulse Response (FIR), low-pass filter
 implemented with an FFT can remove unwanted frequency components in
 order to reduce the bandwidth and power required for  
 transmission.  We will also demonstrate that this bandwidth reduction
@@ -140,6 +142,7 @@ Accessed Nov. 20, 2019.
 \appendix 
 
 \subsection{Python Code for Filter Design\cite{notes:class}}
+\lstset{label={lst:filter}}
 \lstinputlisting[language = Python]{code/filter.py}
 
 \newpage
@@ -150,7 +153,8 @@ Accessed Nov. 20, 2019.
 
 \newpage
 \subsection{Python Code for Sampling\cite{notes:class}}
-\lstinputlisting[language = Python]{code/sampling_og.py}
+\lstset{caption={Sampling}}
+\lstinputlisting[language = Python]{code/Sampling_og.py}
 
 % that's all folks
 \end{document}
